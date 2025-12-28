@@ -638,7 +638,7 @@
      /* Controls / Footer - MOVED HIGHER */
         .proj-controls-area {
             position: absolute; 
-            bottom: 20px;
+            bottom: 10px;
             left: 0; 
             width: 100%;
             display: flex; 
@@ -662,7 +662,10 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 24%;
+            top: auto;
+            bottom: 70px;  /* 10px gap between active card and footer (controls are 10px from bottom, card content needs 10px space) */
+            top: auto;
+            bottom: 70px;  /* 10px gap between active card and footer (controls are 10px from bottom, card content needs 10px space) */
             width: min(860px, 92vw);
             display: flex;
             flex-direction: column;
@@ -675,7 +678,10 @@
         .proj-footer > * { pointer-events: auto; }
         .scroll-hint-top {
     position: absolute;
-    bottom: 30.5%;
+    top: auto;
+    bottom: 140px;  /* Positioned above the proj-footer */
+    top: auto;
+    bottom: 140px;  /* Positioned above the proj-footer */
     left: 50%;
     transform: translateX(-50%);
     font-family: var(--font-pixel);
@@ -831,17 +837,20 @@
                 .home-about-hint { top: 10px; right: 10px; width: 60px; height: 60px; }
                 .home-about-hint img { width: 46px; height: 46px; }
                 .home-about-panel { width: 100%; }
-                .proj-controls-area { top: calc(68% - 10px); bottom: auto; }
+                .proj-controls-area { position: absolute; bottom: 10px; top: auto; }
                 .proj-dots { gap: 7px; visibility: visible; opacity: 1; }
                 .proj-dot { width: 6px; height: 6px; }
-                .proj-footer { bottom: 20%; }
+                .proj-footer { top: auto; bottom: 70px; }
+                .proj-footer { top: calc(68% + -80px); bottom: auto; }
+                .proj-footer { top: auto; bottom: 70px; }
                 .card-title-main { font-size: 1rem; }
                 .card-desc-text { font-size: 0.6rem; line-height: 1.1; letter-spacing: 0.6px; }
 
                 .carousel-about-title, .home-about-title { font-size: 1.35rem; letter-spacing: 1.2px; }
                 .carousel-about-line, .home-about-line { font-size: 0.92rem; letter-spacing: 0.35px; text-transform: none; line-height: 1.25; }
 
-                .scroll-hint-top { font-size: 0.9rem; letter-spacing: 2px; top: calc(68% + 4px); bottom: auto; z-index: 230; }
+                .scroll-hint-top { font-size: 0.9rem; letter-spacing: 2px; top: auto; bottom: 140px; z-index: 230; }
+                .scroll-hint-top { font-size: 0.9rem; letter-spacing: 2px; top: auto; bottom: 140px; z-index: 230; }
 
                 .drag-hint { display: none; }
                 .proj-footer .contact-text { font-size: 0.95rem; letter-spacing: 0.3px; }
@@ -883,7 +892,12 @@
                 .shop-support-btn { padding: 9px 14px; font-size: 0.7rem; letter-spacing: 0.6px; }
                 .shop-support-note { font-size: 1.05rem; }
                 #shop-page p { font-size: 1.05rem !important; margin-top: 12px !important; }
+            
+
+            @media (max-width: 900px) {
+                
             }
+        }
 
     </style>
 </head>
@@ -2487,6 +2501,7 @@
                 uniforms.resolution.value.set(w, h);
             });
         }
+    
     </script>
 </body>
 </html>
