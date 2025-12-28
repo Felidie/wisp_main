@@ -549,7 +549,7 @@
         .vignette-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(circle, transparent 40%, #000000 95%); }
         
         /* Carousel Position */
-        .carousel-container { position: absolute; top: 0; left: 0; width: 100%; height: 78%; display: flex; align-items: center; justify-content: center; perspective: 1000px; z-index: 10; }
+        .carousel-container { position: relative; top: 0; left: 0; width: 100%; height: 78%; display: flex; align-items: center; justify-content: center; perspective: 1000px; z-index: 10; }
 
         .carousel-about-hint { position: absolute; top: 14px; right: 16px; width: 72px; height: 72px; border-radius: 0; display: flex; align-items: center; justify-content: center; z-index: 30; cursor: pointer; background: transparent; border: none; box-shadow: none; backdrop-filter: none; transition: transform 0.2s ease, opacity 0.2s ease; user-select: none; -webkit-user-select: none; }
         .carousel-about-hint:hover { transform: translateY(-1px) scale(1.06); opacity: 1; }
@@ -659,11 +659,11 @@
         .proj-dot.is-active { background: rgba(255,255,255,0.95); box-shadow: 0 0 12px rgba(255,255,255,0.25); transform: scale(1.25); opacity: 1; }
         .proj-dot:hover { background: rgba(255,255,255,0.75); transform: scale(1.15); opacity: 1; }
         .proj-footer {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            position: relative;
+            left: auto;
+            transform: none;
             top: auto;
-            bottom: 70px;  /* 10px gap between active card and footer (controls are 10px from bottom, card content needs 10px space) */
+            bottom: auto;
             width: min(860px, 92vw);
             display: flex;
             flex-direction: column;
@@ -672,16 +672,11 @@
             gap: 8px;
             z-index: 25;
             pointer-events: none;
+            margin: 20px auto;
         }
         .proj-footer > * { pointer-events: auto; }
         .scroll-hint-top {
-    position: absolute;
-    top: auto;
-    bottom: 140px;  /* Positioned above the proj-footer */
-    top: auto;
-    bottom: 140px;  /* Positioned above the proj-footer */
-    left: 50%;
-    transform: translateX(-50%);
+    position: static;
     font-family: var(--font-pixel);
     color: #444;
     font-size: 1.1rem;
@@ -690,6 +685,8 @@
     animation: blink 3s infinite;
     z-index: 230;
     pointer-events: none;
+    margin: 20px auto;
+    text-align: center;
 }
         .proj-footer .contact-text { font-family: var(--font-lubrifont); font-size: 1.65rem; letter-spacing: 0.9px; font-weight: 500; color: rgba(255,255,255,0.82); text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.85); text-transform: none; }
         .proj-footer .contact-row { display: flex; flex-direction: column; gap: 10px; align-items: center; justify-content: center; }
@@ -828,7 +825,7 @@
 
                 #projects-page { height: calc(var(--vh, 1vh) * 100 - 80px); min-height: calc(var(--vh, 1vh) * 100 - 80px); position: relative; width: 100%; overflow: hidden; }
                 .carousel-card { width: min(64vw, 300px); height: auto; aspect-ratio: 19 / 26; max-height: min(calc(var(--vh, 1vh) * 58), 460px); }
-                .carousel-container { top: 0; height: 68%; align-items: center; padding-top: 8px; }
+                .carousel-container { position: relative; top: 0; height: 68%; align-items: center; padding-top: 8px; }
                 .carousel-about-hint { top: 10px; right: 10px; width: 60px; height: 60px; z-index: 60; }
                 .carousel-about-hint img { width: 46px; height: 46px; }
                 .carousel-about-panel { width: 100%; }
@@ -838,16 +835,13 @@
                 .proj-controls-area { position: absolute; bottom: 10px; top: auto; }
                 .proj-dots { gap: 7px; visibility: visible; opacity: 1; }
                 .proj-dot { width: 6px; height: 6px; }
-                .proj-footer { top: auto; bottom: 70px; }
-                .proj-footer { top: auto; bottom: 70px; }
                 .card-title-main { font-size: 1rem; }
                 .card-desc-text { font-size: 0.6rem; line-height: 1.1; letter-spacing: 0.6px; }
 
                 .carousel-about-title, .home-about-title { font-size: 1.35rem; letter-spacing: 1.2px; }
                 .carousel-about-line, .home-about-line { font-size: 0.92rem; letter-spacing: 0.35px; text-transform: none; line-height: 1.25; }
 
-                .scroll-hint-top { font-size: 0.9rem; letter-spacing: 2px; top: auto; bottom: 140px; z-index: 230; }
-                .scroll-hint-top { font-size: 0.9rem; letter-spacing: 2px; top: auto; bottom: 140px; z-index: 230; }
+
 
                 .drag-hint { display: none; }
                 .proj-footer .contact-text { font-size: 0.95rem; letter-spacing: 0.3px; }
@@ -1069,11 +1063,12 @@
             </div>
             
             <div class="carousel-container" id="carousel">
-                <div class="proj-footer">
-                    <div class="contact-row">
-                        <div class="contact-text"><br>Want to see your project in my collection? Feel free to contact me. <br> </div>
-                        <a href="mailto:whispdigital@gmail.com" class="email-btn">whispdigital@gmail.com</a>
-                    </div>
+            </div>
+            
+            <div class="proj-footer">
+                <div class="contact-row">
+                    <div class="contact-text"><br>Want to see your project in my collection? Feel free to contact me. <br> </div>
+                    <a href="mailto:whispdigital@gmail.com" class="email-btn">whispdigital@gmail.com</a>
                 </div>
             </div>
 
