@@ -823,7 +823,7 @@
                 .healing-divider { padding: 8px 12px; font-size: 1.05rem; letter-spacing: 1px; text-transform: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
                 .healing-label-left, .healing-label-right { font-size: 0.95rem; padding: 2px 6px; }
 
-                #projects-page { height: calc(var(--vh, 1vh) * 100 - 80px); min-height: calc(var(--vh, 1vh) * 100 - 80px); position: relative; width: 100%; overflow: hidden; }
+                #projects-page { height: calc(var(--vh, 1vh) * 100 - 80px); min-height: calc(var(--vh, 1vh) * 100 - 80px); position: relative; width: 100%; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
                 .carousel-card { width: min(64vw, 300px); height: auto; aspect-ratio: 19 / 26; max-height: min(calc(var(--vh, 1vh) * 58), 460px); }
                 .carousel-container { position: relative; top: 0; height: 68%; align-items: center; padding-top: 8px; }
                 .carousel-about-hint { top: 10px; right: 10px; width: 60px; height: 60px; z-index: 60; }
@@ -844,6 +844,7 @@
 
 
                 .drag-hint { display: none; }
+                .proj-footer { margin: auto 0 20px 0; }
                 .proj-footer .contact-text { font-size: 0.95rem; letter-spacing: 0.3px; }
                 .proj-footer .contact-row { gap: 10px; }
                 .email-btn { font-size: 0.98rem; padding: 7px 14px; }
