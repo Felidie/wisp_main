@@ -664,8 +664,6 @@
             transform: translateX(-50%);
             top: auto;
             bottom: 70px;  /* 10px gap between active card and footer (controls are 10px from bottom, card content needs 10px space) */
-            top: auto;
-            bottom: 70px;  /* 10px gap between active card and footer (controls are 10px from bottom, card content needs 10px space) */
             width: min(860px, 92vw);
             display: flex;
             flex-direction: column;
@@ -841,7 +839,6 @@
                 .proj-dots { gap: 7px; visibility: visible; opacity: 1; }
                 .proj-dot { width: 6px; height: 6px; }
                 .proj-footer { top: auto; bottom: 70px; }
-                .proj-footer { top: calc(68% + -80px); bottom: auto; }
                 .proj-footer { top: auto; bottom: 70px; }
                 .card-title-main { font-size: 1rem; }
                 .card-desc-text { font-size: 0.6rem; line-height: 1.1; letter-spacing: 0.6px; }
@@ -1071,16 +1068,16 @@
                 </div>
             </div>
             
-            <div class="carousel-container" id="carousel"></div>
-
-            <div class="scroll-hint-top">- - -</div>
-
-            <div class="proj-footer">
-                <div class="contact-row">
-                    <div class="contact-text"><br>Want to see your project in my collection? Feel free to contact me. <br> </div>
-                    <a href="mailto:whispdigital@gmail.com" class="email-btn">whispdigital@gmail.com</a>
+            <div class="carousel-container" id="carousel">
+                <div class="proj-footer">
+                    <div class="contact-row">
+                        <div class="contact-text"><br>Want to see your project in my collection? Feel free to contact me. <br> </div>
+                        <a href="mailto:whispdigital@gmail.com" class="email-btn">whispdigital@gmail.com</a>
+                    </div>
                 </div>
             </div>
+
+            <div class="scroll-hint-top">- - -</div>
         </section>
 
         <!-- UNIVERSE -->
