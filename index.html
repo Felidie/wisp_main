@@ -42,6 +42,7 @@
         
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
         .full-media { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .carousel-iframe, .art-iframe { width: 100%; height: 100%; display: block; border: none; }
         a { text-decoration: none; color: inherit; cursor: pointer; }
 
         #splash-screen {
@@ -816,7 +817,7 @@
             .modal-content-wrap { width: min(96vw, 1040px); max-width: 96vw; max-height: calc(var(--vh, 1vh) * 100 - 48px); background: #0a0a0a; border: 1px solid #333; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 50px rgba(255,255,255,0.05); transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease; transform: translate(0px, 0px) scale(1); opacity: 1; transform-origin: center center; }
             .modal-close { position: absolute; top: -40px; right: 0; color: #fff; font-family: var(--font-pixel); font-size: 2rem; cursor: pointer; }
             .modal-video-box { flex: 1; background: #000; display: flex; justify-content: center; overflow: hidden; }
-            .modal-video-box video { height: auto; width: 100%; max-height: calc(var(--vh, 1vh) * 78); max-width: 100%; display: block; object-fit: contain; }
+            .modal-video-box video, .modal-video-box iframe { height: auto; width: 100%; max-height: calc(var(--vh, 1vh) * 78); max-width: 100%; display: block; object-fit: contain; }
             .modal-video-box img { height: auto; width: 100%; max-height: calc(var(--vh, 1vh) * 78); max-width: 100%; display: none; object-fit: contain; }
             .modal-info-box { height: auto; padding: 20px; width: 100%; border-top: 1px solid #333; background: #0e0e0e; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; }
             .modal-title { font-family: var(--font-pixel); font-size: 2rem; color: #fff; text-transform: uppercase; }
@@ -916,7 +917,7 @@
                 .modal-content-wrap { width: min(92vw, 560px); max-width: 92vw; max-height: calc(var(--vh, 1vh) * 100 - 24px); }
                 .modal-close { display: none; }
                 .modal-video-box { width: 100%; }
-                .modal-video-box video { width: 100%; height: auto; max-height: calc(var(--vh, 1vh) * 55); max-width: 100%; }
+                .modal-video-box video, .modal-video-box iframe { width: 100%; height: auto; max-height: calc(var(--vh, 1vh) * 55); max-width: 100%; }
                 .modal-video-box img { width: 100%; height: auto; max-height: calc(var(--vh, 1vh) * 55); max-width: 100%; }
                 .modal-info-box { padding: 14px; }
                 .modal-title { font-size: 1.6rem; }
@@ -1008,7 +1009,7 @@
     <div id="video-modal">
         <div class="modal-content-wrap">
             <div class="modal-close" onclick="closeModal()">[CLOSE X]</div>
-            <div class="modal-video-box"><video id="modal-vid" controls playsinline></video><img id="modal-img" alt="art"></div>
+            <div class="modal-video-box"><iframe id="modal-vid" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe><img id="modal-img" alt="art"></div>
             <div class="modal-info-box" id="modal-info">
                 <div class="modal-title" id="modal-title-text">PROJECT NAME</div>
             </div>
@@ -1852,7 +1853,13 @@
                 const el = document.createElement('div');
                 el.className = 'carousel-card';
                 el.innerHTML = `
-    <video src="${p.video}" autoplay muted loop playsinline></video>
+    ${p.link && p.link.includes('youtube.com') ? 
+        `<iframe src="https://www.youtube.com/embed/${extractYouTubeId(p.link)}?autoplay=0&mute=1&loop=1&playlist=${extractYouTubeId(p.link)}&controls=0&modestbranding=1" 
+                frameborder="0" 
+                allow="autoplay; encrypted-media" 
+                allowfullscreen
+                class="carousel-iframe"></iframe>` : 
+        `<video src="${p.video}" autoplay muted loop playsinline></video>`}
     <div class="card-inner-vignette"></div>
     ${p.badge ? `<div class="card-badge"><img src="${p.badge}" alt="badge"></div>` : ''}
     <div class="card-overlay">
@@ -2174,19 +2181,22 @@
                     });
                     media.appendChild(img);
                 } else {
-                    const vid = document.createElement('video');
-                    vid.src = `arts/${a.file}`;
-                    vid.muted = true;
-                    vid.volume = 0;
-                    vid.loop = true;
-                    vid.playsInline = true;
-                    vid.autoplay = true;
-                    vid.preload = 'metadata';
-                    vid.setAttribute('playsinline', '');
-                    vid.addEventListener('loadedmetadata', () => {
-                        setCardAspect(card, vid.videoWidth, vid.videoHeight);
-                    });
-                    media.appendChild(vid);
+                    const iframe = document.createElement('iframe');
+                    // Попробуем найти соответствующее YouTube-видео для файла
+                    const youtubeUrl = getYouTubeUrlForFile(a.file);
+                    if (youtubeUrl) {
+                        const videoId = extractYouTubeId(youtubeUrl);
+                        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&modestbranding=1`;
+                        iframe.allow = "autoplay";
+                    } else {
+                        // Если не найдено YouTube-видео, оставляем пустой iframe или изображение-заглушку
+                        iframe.src = '';
+                        iframe.title = 'Video placeholder';
+                    }
+                    iframe.className = 'art-iframe';
+                    iframe.setAttribute('frameborder', '0');
+                    iframe.setAttribute('allowfullscreen', '');
+                    media.appendChild(iframe);
                 }
 
                 const caption = document.createElement('div');
@@ -2598,7 +2608,31 @@
                 uniforms.resolution.value.set(w, h);
             });
         }
-    
+        
+        // Вспомогательные функции для работы с YouTube
+        function extractYouTubeId(url) {
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+            const match = url.match(regExp);
+            return (match && match[2].length === 11) ? match[2] : null;
+        }
+        
+        function getYouTubeUrlForFile(fileName) {
+            // Ищем в projectData и artData соответствующий YouTube URL для файла
+            for (const project of projectData) {
+                if (project.video === fileName && project.link && project.link.includes('youtube.com')) {
+                    return project.link;
+                }
+            }
+            
+            for (const art of artData) {
+                if (art.file === fileName && art.link && art.link.includes('youtube.com')) {
+                    return art.link;
+                }
+            }
+            
+            // Если не найдено, возвращаем null
+            return null;
+        }
     </script>
 </body>
 </html>
