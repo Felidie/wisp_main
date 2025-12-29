@@ -255,6 +255,7 @@
             pointer-events: none;
         }
         .customer-welcome-inner {
+            position: relative;
             width: min(980px, 92vw);
             background: rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.18);
@@ -266,11 +267,9 @@
             font-size: 1.25rem;
             letter-spacing: 0.6px;
             line-height: 1.35;
-            text-transform: none;
             text-align: center;
         }
-        .customer-welcome.is-visible .customer-welcome-inner { transform: translateY(0px); }
-        .customer-welcome.is-hiding .customer-welcome-inner { transform: translateY(-26px); }
+        .customer-welcome.is-visible .customer-welcome-inner { transform: translateY(0); }
         .customer-welcome-inner .cw-title {
             font-family: var(--font-press);
             font-size: 0.85rem;
@@ -279,7 +278,33 @@
             color: rgba(255,255,255,0.92);
             margin-bottom: 10px;
         }
-        .customer-welcome-inner .cw-lines { display: flex; flex-direction: column; gap: 6px; }
+        .customer-welcome-inner .cw-lines { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .cw-home-btn {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: -50px;
+            padding: 10px 20px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.45);
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.88);
+            font-family: var(--font-press);
+            font-size: 0.68rem;
+            letter-spacing: 0.7px;
+            text-transform: uppercase;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.18s ease;
+        }
+        .cw-home-btn:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.7);
+            color: #fff;
+            transform: translateX(-50%) translateY(-1px);
+        }
+        .cw-home-btn:active { transform: translateX(-50%) translateY(1px); }
 
         /* --- 2. HEADER --- */
         header {
@@ -309,7 +334,7 @@
         .header-logo { width: 60px; height: auto; filter: grayscale(100%); transition: 0.3s; }
         .header-text-img { height: 50px; width: auto; filter: brightness(0.9); transition: 0.3s; }
         .header-left:hover .header-text-img { filter: brightness(1.2) drop-shadow(0 0 8px rgba(255,255,255,0.6)); }
-
+        
         nav { position: relative; z-index: 1001; margin-right: 26px; }
         nav ul { display: flex; list-style: none; gap: 64px; }
         nav li {
@@ -555,13 +580,13 @@
         #projects-page::after { display: none; }
         .vignette-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(circle, transparent 40%, #000000 95%); }
 
-        /* Carousel Position - No gap version */
+        /* Carousel Position */
         .carousel-container { 
             position: relative; 
             top: 0; 
             left: 0; 
             width: 100%; 
-            flex: 1;
+            height: calc(100% - 90px);
             display: flex; 
             align-items: center; 
             justify-content: center; 
@@ -570,12 +595,6 @@
             padding: 0;
             margin: 0;
         }
-        #projects-page::before { display: none; }
-        #projects-page::after { display: none; }
-        .vignette-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(circle, transparent 40%, #000000 95%); }
-        
-        /* Carousel Position */
-        .carousel-container { position: relative; top: 0; left: 0; width: 100%; height: 78%; display: flex; align-items: center; justify-content: center; perspective: 1000px; z-index: 10; }
 
         .carousel-about-hint { position: absolute; top: 14px; right: 16px; width: 72px; height: 72px; border-radius: 0; display: flex; align-items: center; justify-content: center; z-index: 30; cursor: pointer; background: transparent; border: none; box-shadow: none; backdrop-filter: none; transition: transform 0.2s ease, opacity 0.2s ease; user-select: none; -webkit-user-select: none; }
         .carousel-about-hint:hover { transform: translateY(-1px) scale(1.06); opacity: 1; }
@@ -680,8 +699,17 @@
             opacity: 1;
             visibility: visible;
         }
-        .proj-dots { display: flex; align-items: center; justify-content: center; gap: 8px; pointer-events: auto; position: relative; z-index: 250; filter: drop-shadow(0 0 10px rgba(0,0,0,0.7)); }
-        .proj-dot { appearance: none; border: none; padding: 0; width: 7px; height: 7px; border-radius: 999px; background: rgba(255,255,255,0.38); box-shadow: 0 0 0 rgba(255,255,255,0); cursor: pointer; transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease; opacity: 0.7; }
+        .proj-dots-fixed { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            pointer-events: auto; 
+            z-index: 250; 
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.7)); 
+            margin-bottom: 16px;
+        }
+        .proj-dot { appearance: none; border: none; padding: 0; width: 8px; height: 8px; border-radius: 999px; background: rgba(255,255,255,0.38); box-shadow: 0 0 0 rgba(255,255,255,0); cursor: pointer; transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease; opacity: 0.7; }
         .proj-dot.is-active { background: rgba(255,255,255,0.95); box-shadow: 0 0 12px rgba(255,255,255,0.25); transform: scale(1.25); opacity: 1; }
         .proj-dot:hover { background: rgba(255,255,255,0.75); transform: scale(1.15); opacity: 1; }
         .proj-footer {
@@ -699,7 +727,7 @@
             z-index: 25;
             pointer-events: none;
             margin: 0;
-            padding: 10px 0 20px 0;
+            padding: 6px 0 14px 0;
             background: transparent;
             border-top: 1px solid rgba(255,255,255,0.1);
         }
@@ -919,7 +947,34 @@
             }
         }
 
-    </style>
+    /* iPad specific styles (768px - 1024px) */
+    @media (min-width: 768px) and (max-width: 1024px) {
+        .splash-logo { max-width: min(380px, 70vw); }
+        .ps1-bar { width: min(400px, 70vw); }
+        .splash-choice { font-size: 1.1rem; padding: 12px 22px; }
+        
+        #projects-page { height: calc(var(--vh, 1vh) * 100 - 80px); }
+        .carousel-card { width: min(52vw, 380px); max-height: min(calc(var(--vh, 1vh) * 62), 520px); }
+        .carousel-container { height: 72%; }
+        .card-title-main { font-size: 1.4rem; }
+        .card-desc-text { font-size: 0.85rem; }
+        .proj-dots-fixed { gap: 10px; margin-bottom: 14px; }
+        .proj-dot { width: 8px; height: 8px; }
+        .proj-footer .contact-text { font-size: 1.2rem; }
+        .email-btn { font-size: 1.2rem; padding: 10px 18px; }
+        
+        .art-grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; gap: 14px; }
+        .art-card { grid-column: span 1 !important; grid-row: auto !important; aspect-ratio: var(--art-ar, 16 / 9); }
+        .art-card.art-pos-1, .art-card.art-pos-5, .art-card.art-pos-6, .art-card.art-pos-10 { grid-column: span 2 !important; }
+        .art-bottom-row { grid-template-columns: repeat(2, 1fr); }
+        .art-top-title { font-size: 1.6rem; }
+        .art-ig-btn { font-size: 1.3rem; }
+        
+        .customer-welcome-inner { font-size: 1.35rem; padding: 22px; }
+        .cw-home-btn { font-size: 0.75rem; padding: 12px 24px; }
+    }
+
+</style>
 </head>
 <body class="is-loading">
 
@@ -1095,13 +1150,13 @@
             </div>
             
             <div class="proj-footer">
+                <div class="proj-dots-fixed" id="proj-dots-fixed" aria-label="Project pagination"></div>
                 <div class="contact-row">
                     <div class="contact-text"><br>Want to see your project in my collection? Feel free to contact me. <br> </div>
                     <a href="mailto:whispdigital@gmail.com" class="email-btn">whispdigital@gmail.com</a>
                 </div>
             </div>
 
-            <div class="scroll-hint-top">- - -</div>
         </section>
 
         <!-- UNIVERSE -->
@@ -1279,6 +1334,7 @@
                             '<div>- consultation and implementation of AI.</div>' +
                             '<div>My commercial projects collection roll.</div>' +
                         '</div>' +
+                        '<button type="button" class="cw-home-btn">MAIN PAGE</button>' +
                     '</div>';
 
                 const hide = () => {
@@ -1287,7 +1343,19 @@
                     window.setTimeout(() => wrap.remove(), 600);
                 };
 
+                const goHome = (e) => {
+                    if (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                    hide();
+                    handleNavClick('home');
+                };
+
                 const closeHandler = (e) => {
+                    if (e && e.target && e.target.classList && e.target.classList.contains('cw-home-btn')) {
+                        return;
+                    }
                     if (e) {
                         e.preventDefault();
                         e.stopPropagation();
@@ -1298,6 +1366,13 @@
                 wrap.addEventListener('pointerdown', closeHandler);
                 wrap.addEventListener('click', closeHandler);
                 wrap.addEventListener('touchstart', closeHandler, { passive: false });
+
+                const homeBtn = wrap.querySelector('.cw-home-btn');
+                if (homeBtn) {
+                    homeBtn.addEventListener('click', goHome);
+                    homeBtn.addEventListener('pointerdown', (e) => e.stopPropagation());
+                    homeBtn.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: false });
+                }
 
                 document.body.appendChild(wrap);
                 void wrap.offsetWidth;
@@ -1784,42 +1859,36 @@
         <div class="card-title-main">${p.title}</div>
         <div class="card-divider"></div>
         <div class="card-desc-text">${p.desc}</div>
-    </div>
-    <div class="proj-controls-area">
-        <div class="proj-dots" id="proj-dots-${p.id || projectData.indexOf(p)}" aria-label="Project pagination"></div>
     </div>`;
                 container.appendChild(el);
                 carouselState.cards.push(el);
             });
 
-            // Создаем точки управления для каждой карточки
-            projectData.forEach((_, i) => {
-                // Создаем точки для каждой карточки
-                const dotsContainer = document.getElementById(`proj-dots-${i}`);
-                if (dotsContainer) {
-                    dotsContainer.innerHTML = '';
-                    projectData.forEach((_, j) => {
-                        const d = document.createElement('button');
-                        d.type = 'button';
-                        d.className = 'proj-dot';
-                        d.setAttribute('aria-label', `Go to project ${j + 1}`);
-                        d.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            const count = projectData.length;
-                            const base = Math.round(carouselState.target);
-                            let curIdx = base % count;
-                            if (curIdx < 0) curIdx += count;
-                            let delta = j - curIdx;
-                            if (delta > count / 2) delta -= count;
-                            if (delta < -count / 2) delta += count;
-                            carouselState.target += delta;
-                            carouselState.velocity = 0;
-                        });
-                        dotsContainer.appendChild(d);
+            // Create fixed dots in footer
+            const fixedDotsContainer = document.getElementById('proj-dots-fixed');
+            if (fixedDotsContainer) {
+                fixedDotsContainer.innerHTML = '';
+                projectData.forEach((_, j) => {
+                    const d = document.createElement('button');
+                    d.type = 'button';
+                    d.className = 'proj-dot';
+                    d.setAttribute('aria-label', `Go to project ${j + 1}`);
+                    d.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        const count = projectData.length;
+                        const base = Math.round(carouselState.target);
+                        let curIdx = base % count;
+                        if (curIdx < 0) curIdx += count;
+                        let delta = j - curIdx;
+                        if (delta > count / 2) delta -= count;
+                        if (delta < -count / 2) delta += count;
+                        carouselState.target += delta;
+                        carouselState.velocity = 0;
                     });
-                }
-            });
+                    fixedDotsContainer.appendChild(d);
+                });
+            }
             
             const wrap = document.getElementById('projects-page');
             wrap.addEventListener('mousedown', (e) => {
@@ -1838,7 +1907,9 @@
                     carouselState.isDragging = true;
                     document.body.classList.add('no-select');
                     carouselState.startX = e.touches[0].clientX;
+                    carouselState.startY = e.touches[0].clientY;
                     carouselState.lastX = e.touches[0].clientX;
+                    carouselState.lastY = e.touches[0].clientY;
                     carouselState.velocity = 0;
                     carouselState.lastT = performance.now();
                     carouselState.dragBaseTarget = carouselState.target;
@@ -1860,14 +1931,16 @@
                     const mult = mode === 1 ? 16 : mode === 2 ? window.innerHeight : 1;
                     const domPx = dominant * mult;
 
-                    const wheelScale = 0.00125;
+                    // Wheel sensitivity (lower = slower scroll per gesture)
+                    const wheelScale = 0.0018;
                     let impulse = domPx * wheelScale;
 
-                    impulse = Math.max(-1.15, Math.min(1.15, impulse));
+                    impulse = Math.max(-1.5, Math.min(1.5, impulse));
 
                     carouselState.target += impulse;
-                    carouselState.velocity = carouselState.velocity * 0.78 + impulse * 0.45;
-                    carouselState.velocity = Math.max(-1.35, Math.min(1.35, carouselState.velocity));
+                    // Keep some inertia but respond faster to new input
+                    carouselState.velocity = carouselState.velocity * 0.65 + impulse * 0.6;
+                    carouselState.velocity = Math.max(-1.8, Math.min(1.8, carouselState.velocity));
                 },
                 { passive: false }
             );
@@ -1887,24 +1960,33 @@
                 const delta = e.clientX - carouselState.lastX;
                 carouselState.lastX = e.clientX;
 
-                const impulse = delta * 0.0021;
+                // Mouse drag sensitivity
+                const impulse = delta * 0.003;
                 carouselState.target += impulse;
-                carouselState.velocity = carouselState.velocity * 0.82 + impulse * 0.55;
-                carouselState.velocity = Math.max(-0.9, Math.min(0.9, carouselState.velocity));
+                carouselState.velocity = carouselState.velocity * 0.7 + impulse * 0.6;
+                carouselState.velocity = Math.max(-1.2, Math.min(1.2, carouselState.velocity));
             });
 
             wrap.addEventListener(
                 'touchmove',
                 (e) => {
                     if (!carouselState.isDragging) return;
+                    e.preventDefault(); // Block pull-to-refresh
                     const x = e.touches[0].clientX;
-                    const delta = x - carouselState.lastX;
+                    const y = e.touches[0].clientY;
+                    const deltaX = x - carouselState.lastX;
+                    const deltaY = y - carouselState.lastY;
                     carouselState.lastX = x;
+                    carouselState.lastY = y;
 
-                    const impulse = delta * 0.0024;
+                    // Use dominant axis (horizontal or vertical) for carousel movement
+                    const dominant = Math.abs(deltaX) > Math.abs(deltaY) ? deltaX : -deltaY;
+                    // Invert direction: swipe left/up -> next card, swipe right/down -> prev card
+                    // Touch sensitivity (lower = slower scroll)
+                    const impulse = -dominant * 0.007;
                     carouselState.target += impulse;
-                    carouselState.velocity = carouselState.velocity * 0.82 + impulse * 0.55;
-                    carouselState.velocity = Math.max(-1.05, Math.min(1.05, carouselState.velocity));
+                    carouselState.velocity = carouselState.velocity * 0.55 + impulse * 0.75;
+                    carouselState.velocity = Math.max(-2.0, Math.min(2.0, carouselState.velocity));
                 },
                 { passive: false }
             );
@@ -1979,14 +2061,17 @@
             requestAnimationFrame(animateCarousel);
             if(!carouselState.isDragging) {
                 carouselState.target += carouselState.velocity;
-                carouselState.velocity *= 0.88;
-                if(Math.abs(carouselState.velocity) < 0.0009) carouselState.velocity = 0;
+                // Lower value = less inertia, faster stop
+                carouselState.velocity *= 0.82;
+                if(Math.abs(carouselState.velocity) < 0.001) carouselState.velocity = 0;
 
                 const now = performance.now();
-                const allowSnap = Math.abs(carouselState.velocity) < 0.028 && (now - (carouselState.lastWheelAt || 0)) > 140;
+                // Snap to nearest card when velocity is low
+                const allowSnap = Math.abs(carouselState.velocity) < 0.04 && (now - (carouselState.lastWheelAt || 0)) > 120;
                 if (allowSnap) {
                     const snap = Math.round(carouselState.target);
-                    carouselState.target += (snap - carouselState.target) * 0.06;
+                    // Smooth snap - not too aggressive
+                    carouselState.target += (snap - carouselState.target) * 0.1;
                 }
             }
             carouselState.current += (carouselState.target - carouselState.current) * 0.095;
@@ -2024,31 +2109,22 @@
                 }
             });
 
-            // Обновляем активные точки внутри карточек
+            // Update fixed dots
             const count = projectData.length;
             let idx = Math.round(carouselState.current) % count;
             if (idx < 0) idx += count;
             
-            // Обновляем точки во всех карточках
-            carouselState.cards.forEach((card, i) => {
-                const dotsContainer = card.querySelector('.proj-dots');
-                if (dotsContainer) {
-                    const dots = dotsContainer.querySelectorAll('.proj-dot');
-                    dots.forEach((dot, j) => {
-                        // В активной карточке делаем активной точку, соответствующую текущей позиции
-                        // В неактивных карточках убираем активность
-                        if (i === idx) { // Это активная карточка
-                            if (j === idx) { // Это точка, соответствующая текущей позиции
-                                dot.classList.add('is-active');
-                            } else {
-                                dot.classList.remove('is-active');
-                            }
-                        } else { // Это неактивная карточка
-                            dot.classList.remove('is-active');
-                        }
-                    });
-                }
-            });
+            const fixedDotsContainer = document.getElementById('proj-dots-fixed');
+            if (fixedDotsContainer) {
+                const dots = fixedDotsContainer.querySelectorAll('.proj-dot');
+                dots.forEach((dot, j) => {
+                    if (j === idx) {
+                        dot.classList.add('is-active');
+                    } else {
+                        dot.classList.remove('is-active');
+                    }
+                });
+            }
         }
 
         let artCarouselState = {
